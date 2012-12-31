@@ -1,6 +1,5 @@
 class BloomFilter
 
-  # @param [Integer] size
   def initialize(size)
     @filterSize = size
     @filter = Array.new(@filterSize) { |index| 0 }
@@ -34,7 +33,7 @@ class BloomFilter
     addHashVal = add_hash(str).to_i
     multHashVal = mult_hash(str).to_i
     xorHashVal = xor_hash(str).to_i
-    # puts "Div Hash - " +
+    puts "Adding " + str.to_s + " / hashes: "+ addHashVal.to_s + ", " + multHashVal.to_s + ", " + xorHashVal.to_s
     @filter[addHashVal] = 1
     @filter[multHashVal] = 1
     @filter[xorHashVal] = 1
@@ -44,6 +43,7 @@ class BloomFilter
     addHashVal = add_hash(str).to_i
     multHashVal = mult_hash(str).to_i
     xorHashVal = xor_hash(str).to_i
+    puts "Checking " + str.to_s + " / hashes: "+ addHashVal.to_s + ", " + multHashVal.to_s + ", " + xorHashVal.to_s
     if @filter[addHashVal] == 1 && @filter[multHashVal] == 1 && @filter[xorHashVal] == 1
       true
     else
@@ -62,10 +62,15 @@ end
 puts "Bloom Filter test"
 bf = BloomFilter.new(23)
 bf.add "cockatiel"
+bf.print_filter
 bf.add "parrot"
+bf.print_filter
 bf.add "sparrow"
-bf.add "arrisons"
+bf.print_filter
+bf.add "dove"
+bf.print_filter
+bf.add "starling"
 bf.print_filter
 puts (bf.check "cockatiel").to_s
 puts (bf.check "parakeet").to_s
-puts (bf.check "arrisons").to_s
+puts (bf.check "cockatoo").to_s
